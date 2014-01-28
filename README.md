@@ -18,6 +18,8 @@ Once pathogen is setup, simply run these commands:
 git clone git://github.com/epage/vim-ondemandhightlight.git ~/.vim/bundle/vim-ondemandhightlight
 ```
 
+Note: this does not yet work on Windows
+
 ## Author
 
 Taken from a [gist](https://gist.github.com/akkartik/8642131) by [Kartik Agaram](http://akkartik.name) (contact him at ondemandhighlight@akkartik.com).  Experimenting with an idea by [Evan Brooks](https://medium.com/p/3a6db2743a1e).
