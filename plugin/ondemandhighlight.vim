@@ -1,15 +1,10 @@
+" By Kartik Agaram -- http://akkartik.name -- ondemandhighlight@akkartik.com
+
 if exists('g:loaded_ondemandhighlight') || &compatible
   finish
 else
   let g:loaded_ondemandhighlight = 1
 endif
-
-" Highlight a word from inside vim. The color is chosen at random but
-" persisted across sessions.
-
-" By Kartik Agaram -- http://akkartik.name -- ondemandhighlight@akkartik.com
-" Experimenting with an idea by Evan Brooks: https://medium.com/p/3a6db2743a1e
-" Discussion: http://www.reddit.com/r/programming/comments/1w76um/coding_in_color
 
 let highlight_file = &viewdir."/highlights"
 autocmd BufReadPost * silent! exec "source ".g:highlight_file
