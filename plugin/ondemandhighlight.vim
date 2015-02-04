@@ -6,12 +6,12 @@
 " Discussion: http://www.reddit.com/r/programming/comments/1w76um/coding_in_color
 
 
-let highlight_file = &viewdir."/highlights"
-if !filereadable(highlight_file)
+let g:highlight_file = &viewdir."/highlights"
+if !filereadable(g:highlight_file)
   call system("mkdir -p ".&viewdir)
-  call system("echo 'call clearmatches()' > ".highlight_file)
+  call system("echo 'call clearmatches()' > ".g:highlight_file)
 endif
-autocmd BufReadPost,WinEnter * silent! exec "source ".highlight_file
+autocmd BufReadPost,WinEnter * silent! exec "source ".g:highlight_file
 
 function! s:highlight_super(x)
   let g:highlight_super = 1
