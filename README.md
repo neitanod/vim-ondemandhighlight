@@ -12,7 +12,7 @@ persisted across sessions.
 
 Pathogen:
 ```
-git clone git://github.com/epage/vim-ondemandhightlight.git ~/.vim/bundle/vim-ondemandhightlight
+git clone git://github.com/neitanod/vim-ondemandhightlight.git ~/.vim/bundle/vim-ondemandhightlight
 ```
 VimPlug:
 
