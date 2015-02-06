@@ -10,6 +10,9 @@ let g:highlight_file = &viewdir."/highlights"
 if !exists('g:ondemand_highlight_enabled')
   let g:ondemand_highlight_enabled = 0
 endif
+if !exists('g:ondemand_highlight_auto_map')
+  let g:ondemand_highlight_auto_map = 1
+endif
 if !filereadable(g:highlight_file)
   call system("mkdir -p ".&viewdir)
   call system("echo 'let g:ondemand_highlight_enabled = 1' > ".g:highlight_file)
@@ -30,9 +33,11 @@ function! s:OnDemandHighlightLoad()
   if !g:ondemand_highlight_enabled
     call clearmatches()
   endif
-  nnoremap <leader>= :Highlight <C-r><C-w><CR>
-  nnoremap <leader>- :HighlightSuper <C-r><C-w><CR>
-  nnoremap <leader>_ :Unhighlight <C-r><C-w><CR>
+  if g:ondemand_highlight_auto_map
+    nnoremap <leader>= :Highlight <C-r><C-w><CR>
+    nnoremap <leader>- :HighlightSuper <C-r><C-w><CR>
+    nnoremap <leader>_ :Unhighlight <C-r><C-w><CR>
+  endif
 endfunction
 
 function! s:OnDemandHighlightOn()
