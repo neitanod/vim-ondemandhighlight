@@ -7,11 +7,48 @@
 
 
 let g:highlight_file = &viewdir."/highlights"
+if !exists('g:ondemand_highlight_enabled')
+  let g:ondemand_highlight_enabled = 0
+endif
 if !filereadable(g:highlight_file)
   call system("mkdir -p ".&viewdir)
-  call system("echo 'call clearmatches()' > ".g:highlight_file)
+  call system("echo 'let g:ondemand_highlight_enabled = 1' > ".g:highlight_file)
+  call system("echo 'call clearmatches()' >> ".g:highlight_file)
 endif
-autocmd BufReadPost,WinEnter * silent! exec "source ".g:highlight_file
+autocmd BufReadPost,WinEnter * silent! call s:OnDemandHighlightShow()
+
+function! s:OnDemandHighlightShow()
+  if g:ondemand_highlight_enabled
+    exec "source ".g:highlight_file
+  else
+    call clearmatches()
+  endif
+endfunction
+
+function! s:OnDemandHighlightLoad()
+  exec "source ".g:highlight_file
+  if !g:ondemand_highlight_enabled
+    call clearmatches()
+  endif
+endfunction
+
+function! s:OnDemandHighlightOn()
+  exec ":new ".g:highlight_file
+    silent! exec ":%s/let g:ondemand_highlight_enabled = ./let g:ondemand_highlight_enabled = 1/g"
+  write | bdelete
+  let g:ondemand_highlight_enabled = 1
+  call s:OnDemandHighlightShow()
+  let g:ondemand_highlight_enabled = 1
+endfunction
+
+function! s:OnDemandHighlightOff()
+  exec ":new ".g:highlight_file
+    silent! exec ":%s/let g:ondemand_highlight_enabled = ./let g:ondemand_highlight_enabled = 0/g"
+  write | bdelete
+  let g:ondemand_highlight_enabled = 0
+  call s:OnDemandHighlightShow()
+  let g:ondemand_highlight_enabled = 0
+endfunction
 
 function! s:highlight_super(x)
   let g:highlight_super = 1
@@ -19,7 +56,7 @@ function! s:highlight_super(x)
 endfunction
 
 function! s:highlight(x)
-  if !exists('g:highlight_super') 
+  if !exists('g:highlight_super')
     let g:highlight_super = 0
   endif
   let l:wrap = &wrap | set nowrap
@@ -39,7 +76,7 @@ function! s:highlight(x)
     endif
   write | bdelete
   if l:wrap | set wrap | endif
-  exec "source ".g:highlight_file
+  call s:OnDemandHighlightOn()
 endfunction
 
 function! s:unhighlight(x)
@@ -48,7 +85,7 @@ function! s:unhighlight(x)
     silent exec "%!grep -v '\\<".s:group(a:x)."\\>'"
   write | bdelete
   if l:wrap | set wrap | endif
-  exec "source ".g:highlight_file
+  call s:OnDemandHighlightOn()
 endfunction
 
 function! s:group(x)
@@ -62,6 +99,10 @@ endfunction
 command! -nargs=1 Highlight call s:unhighlight(<q-args>) | call s:highlight(<q-args>)
 command! -nargs=1 HighlightSuper call s:unhighlight(<q-args>) | call s:highlight_super(<q-args>)
 command! -nargs=1 Unhighlight call s:unhighlight(<q-args>)
+command! OnDemandHighlightOn call s:OnDemandHighlightOn()
+command! OnDemandHighlightOff call s:OnDemandHighlightOff()
+
+call s:OnDemandHighlightLoad()
 
 map <leader>= :Highlight <C-r><C-w><CR>
 map <leader>- :HighlightSuper <C-r><C-w><CR>
