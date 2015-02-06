@@ -1,4 +1,4 @@
-vim-ondemandhightlight
+vim-ondemandhighlight
 =========
 
 Highlight a word from inside vim. The color is chosen at random but
@@ -9,14 +9,14 @@ persisted across sessions.
 
 Pathogen:
 ```
-git clone https://github.com/neitanod/vim-ondemandhightlight ~/.vim/bundle/vim-ondemandhightlight
+git clone https://github.com/neitanod/vim-ondemandhighlight ~/.vim/bundle/vim-ondemandhighlight
 ```
 
 VimPlug:
 
 Put this on your .vimrc:
 ```
-Plug 'https://github.com/neitanod/vim-ondemandhightlight'
+Plug 'https://github.com/neitanod/vim-ondemandhighlight'
 ```
 
 ## Usage
