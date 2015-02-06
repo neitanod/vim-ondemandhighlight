@@ -30,6 +30,9 @@ function! s:OnDemandHighlightLoad()
   if !g:ondemand_highlight_enabled
     call clearmatches()
   endif
+  nnoremap <leader>= :Highlight <C-r><C-w><CR>
+  nnoremap <leader>- :HighlightSuper <C-r><C-w><CR>
+  nnoremap <leader>_ :Unhighlight <C-r><C-w><CR>
 endfunction
 
 function! s:OnDemandHighlightOn()
@@ -103,10 +106,6 @@ command! OnDemandHighlightOn call s:OnDemandHighlightOn()
 command! OnDemandHighlightOff call s:OnDemandHighlightOff()
 
 call s:OnDemandHighlightLoad()
-
-map <leader>= :Highlight <C-r><C-w><CR>
-map <leader>- :HighlightSuper <C-r><C-w><CR>
-map <leader>_ :Unhighlight <C-r><C-w><CR>
 
 " Scenarios considered:
 "   should instantly update colors
